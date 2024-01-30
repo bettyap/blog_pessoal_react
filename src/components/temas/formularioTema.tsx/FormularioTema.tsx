@@ -4,6 +4,8 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import Tema from "../../../models/Tema";
 import { atualizar, buscar, cadastrar } from "../../../services/Service";
 import { RotatingLines } from "react-loader-spinner";
+import { ToastAlerta } from "../../../utils/ToastAlerts";
+
 
 function FormularioTema() {
 
@@ -27,7 +29,7 @@ function FormularioTema() {
       })
     } catch (error: any) {
       if (error.toString().includes('403')) {
-        alert('O token expirou, favor logar novamente')
+        ToastAlerta('O token expirou, favor logar novamente', "erro")
         handleLogout()
       }
     }
@@ -35,7 +37,7 @@ function FormularioTema() {
 
   useEffect(() => {
     if (token === '') {
-      alert('Você precisa estar logado')
+      ToastAlerta('Você precisa estar logado', "info")
       navigate('/login');
     }
   }, [token]);
@@ -69,14 +71,14 @@ function FormularioTema() {
           }
         })
 
-        alert('Tema atualizado com sucesso')
+        ToastAlerta('Tema atualizado com sucesso', 'sucesso')
 
       } catch (error: any) {
         if (error.toString().includes('403')) {
-          alert('O token expirou, favor logar novamente')
+          ToastAlerta('O token expirou, favor logar novamente', 'info')
           handleLogout()
         } else {
-          alert('Erro ao atualizar o Tema')
+          ToastAlerta('Erro ao atualizar o Tema', 'erro')
         }
       }
     } else {
@@ -87,14 +89,14 @@ function FormularioTema() {
           }
         })
 
-        alert('Tema cadastrado com sucesso')
+        ToastAlerta('Tema cadastrado com sucesso', 'sucesso')
 
       } catch (error: any) {
         if (error.toString().includes('403')) {
-          alert('O token expirou, favor logar novamente')
+          ToastAlerta('O token expirou, favor logar novamente', '')
           handleLogout()
         } else {
-          alert('Erro ao cadastrar o Tema')
+          ToastAlerta('Erro ao cadastrar o Tema', 'erro')
         }
       }
     }
@@ -122,7 +124,7 @@ function FormularioTema() {
           />
         </div>
         <button
-          className="rounded text-slate-100 bg-indigo-400 hover:bg-indigo-800 w-1/2 py-2 mx-auto block"
+          className="rounded text-slate-100 bg-dodger-blue-500 hover:bg-dodger-blue-600 w-1/2 py-2 mx-auto flex justify-center"
           type="submit">
 
           {isLoading ?

@@ -4,7 +4,8 @@ import { buscar } from '../../../services/Service';
 import CardTemas from '../cardTemas/CardTemas';
 import Tema from '../../../models/Tema';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { DNA } from 'react-loader-spinner';
+import { CirclesWithBar } from 'react-loader-spinner';
+import { ToastAlerta } from '../../../utils/ToastAlerts';
 
 function ListaTemas() {
 
@@ -23,14 +24,14 @@ function ListaTemas() {
       })
     } catch (error: any) {
       if (error.toString().includes('403'))
-        alert('O token expirou!')
+        ToastAlerta('O token expirou!', '')
       handleLogout
     }
   }
 
   useEffect(() => {
     if (token === '') {
-      alert('Você precisa estar logado!')
+      ToastAlerta('Você precisa estar logado!', '')
       navigate('/login')
     }
   }, [token])
@@ -41,16 +42,20 @@ function ListaTemas() {
 
   return (
     <>
-    {temas.length === 0 && (
-      <DNA
-        visible={true}
-        height="200"
-        width="200"
-        ariaLabel="dna-loading"
-        wrapperStyle={{}}
-        wrapperClass="dna-wrapper mx-auto"
-      />
-    )}
+      {temas.length === 0 && (
+        <CirclesWithBar
+          height="200"
+          width="200"
+          color="#094a83"
+          outerCircleColor="#094a83"
+          innerCircleColor="#094a83"
+          barColor="#094a83"
+          ariaLabel="circles-with-bar-loading"
+          wrapperStyle={{}}
+          wrapperClass="flex justify-center m-1"
+          visible={true}
+        />
+      )}
       <div className="flex justify-center w-full my-4">
         <div className="container flex flex-col">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
